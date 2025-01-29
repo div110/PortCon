@@ -6,10 +6,10 @@
 
 
 
-char input[4];
-int lines;
+char input[21];
+int lines=0;
 int max_length;
-int length;
+int length=0;
 
 
 
@@ -18,28 +18,72 @@ printf("\nList of availible inputs:\nhelp - show this dialog\nUSE - USE Flag con
 }
 
 
-////////////////////////////////////////////////////////////////////
-void list(char category[15],char pcontents[lines][max_length])//////
-{///////////////////////////////////////////////////////////////////
-}///////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+ ///////USE////////USE/////////USE/////////USE////////USE/////////USE/////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+//void list(char category[4],char pcontents[lines][max_length])
+//{
+//char * search;
+//	for(int i=0;i<lines;i++)
+//	{
+//		search = strstr(pcontents[i],category);
+//		if(search!=NULL){break;}
+//	}
+//search=search+5;
+//search[strlen(search)-1]='\0';
+//printf("Found at: %p\n", search);
+//printf("Dereference: %s\n",search);
+//}
 
 
-void use(){
+void use(char pcontents[lines][max_length]){
+
+char * search;
+
+	for(int i=0;i<lines;i++)
+	{
+		search = strstr(pcontents[i],"USE");
+		if(search!=NULL){break;}
+	}
+
+search=search+5;
+search[strlen(search)-1]=' ';
+
 do
 {
 	printf("USEconf: ");
 	scanf("%s",input);
-	if(strcmp(input,"list")==0){}
+	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
+	if(strcmp(input,"list")==0){printf("\n%s\n\n",search);}	
 }
 while(strcmp(input,"exit")!=0);
-for(int i=0;i<4;i++){input[i]='\n';}
+input[1]='\0';
+}
+ ////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+
+void makeopts(char pcontents[lines][max_length]){
+
+char * search;
+	for(int i=0;i<lines;i++)
+	{
+		search = strstr(pcontents[i],"MAKEOPTS");
+		if(search!=NULL){break;}
+	}
+if(search!=NULL){search=search+10;
+search[strlen(search)-1]=' ';
 }
 
-
-
-
-
+do
+{
+	printf("MAKEOPTSconf: ");
+	scanf("%s",input);
+	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
+	if(strcmp(input, "list")==0){printf("\n%s\n\n",search);}
+}
+while(strcmp(input,"exit")!=0);
+input[1]='\0';
+}
 
 
 
@@ -74,7 +118,6 @@ char contents[lines][max_length];
 for(int i=0;i<lines;i++){for(int j=0;j<max_length;j++){contents[i][j]='\0';}}
 
 
-
 lines=0;
 int index=0;
 for(int loko=0;loko<strlen(buf);loko++){
@@ -89,15 +132,14 @@ index++;
 
 
 
-printf("lines: %d\nlongest line: %d characters\n",lines, max_length);
-
 do
 	{
 	printf("tool: ");
 	scanf("%s",input);
-	if(strcmp(input,"USE")==0){use();}
+	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
+	if(strcmp(input,"USE")==0){use(contents);}
 	else if(strcmp(input,"VIDEO_CARDS")==0){}
-	else if(strcmp(input,"MAKEOPTS")==0){}
+	else if(strcmp(input,"MAKEOPTS")==0){makeopts(contents);}
 	else if(strcmp(input,"ACCEPT_LICENSE")==0){}
 	else if(strcmp(input,"help")==0||strcmp(input,"h")==0){help();}
 	else if(strcmp(input,"exit")!=0){printf("unrecognized; type 'help' to see availible commands\n");}
