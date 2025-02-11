@@ -10,14 +10,25 @@ char input[21];
 int lines=0;
 int max_length;
 int length=0;
-
+char * search;
 
 
 void help(){
 printf("\nList of availible inputs:\nhelp - show this dialog\nUSE - USE Flag configuration mode\nVIDEO_CARDS - VIDEO_CARDS configuration mode\nMAKEOPTS - MAKEOPTS configuration mode\nACCEPT_LICENSE - ACCEPT_LICENSE configuration mode\nexit - exit program without saving changes\n\n");
 }
-
-
+//TODO 
+void action(char * name){
+	char name_true[strlen(name+2)];
+	name_true[0]=' ';
+	for(int i=0;i<strlen(name_true);i++){name_true[i+1]=name[i];} //changing name to name_true fixes Xkde bug
+	printf("action() has just been called!\nParameter is: %s\n",name_true);
+	if(strstr(search,name_true)!=NULL){printf("Found!\n");}
+	printf("%s\n",name_true);
+	
+	//cleaning name_true
+	for(int i=0;i<strlen(name_true);i++){name_true[i]='\0';}
+	printf("%s\n",name_true);
+}
  ///////USE////////USE/////////USE/////////USE////////USE/////////USE/////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 //void list(char category[4],char pcontents[lines][max_length])
@@ -37,7 +48,7 @@ printf("\nList of availible inputs:\nhelp - show this dialog\nUSE - USE Flag con
 
 void use(char pcontents[lines][max_length]){
 
-char * search;
+//char * search;
 
 	for(int i=0;i<lines;i++)
 	{
@@ -53,7 +64,8 @@ do
 	printf("USEconf: ");
 	scanf("%s",input);
 	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
-	if(strcmp(input,"list")==0){printf("\n%s\n\n",search);}	
+	else if(strcmp(input,"list")==0){printf("\n%s\n\n",search);}
+	else if(strcmp(input,"exit")!=0){action(input);}
 }
 while(strcmp(input,"exit")!=0);
 input[1]='\0';
@@ -99,7 +111,7 @@ int main(int argc, char* argv[]){
 
 FILE *file;
 file = fopen("/etc/portage/make.conf","r");
-char buf[10000];
+char buf[100000];
 fscanf(file,"%[^#]",buf);
 printf("%s\n", buf);
 
@@ -111,6 +123,7 @@ for(int i=0;i<strlen(buf);i++){
 	if(buf[i]=='\n'){lines++;length=0;}
 	if(length>max_length){max_length=length;}
 }
+max_length = 2 * max_length;
 char contents[lines][max_length];
 
 
