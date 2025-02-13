@@ -16,18 +16,44 @@ char * search;
 void help(){
 printf("\nList of availible inputs:\nhelp - show this dialog\nUSE - USE Flag configuration mode\nVIDEO_CARDS - VIDEO_CARDS configuration mode\nMAKEOPTS - MAKEOPTS configuration mode\nACCEPT_LICENSE - ACCEPT_LICENSE configuration mode\nexit - exit program without saving changes\n\n");
 }
-//TODO 
 void action(char * name){
-	char name_true[strlen(name+2)];
+	printf("%ld\n",strlen(name));
+	char name_true[strlen(name)+3];
 	name_true[0]=' ';
-	for(int i=0;i<strlen(name_true);i++){name_true[i+1]=name[i];} //changing name to name_true fixes Xkde bug
-	printf("action() has just been called!\nParameter is: %s\n",name_true);
-	if(strstr(search,name_true)!=NULL){printf("Found!\n");}
-	printf("%s\n",name_true);
+	for(int i=0;i<strlen(name_true);i++)
+	{name_true[i+1]=name[i];} //changing name to name_true fixes Xkde bug
+	//name_true[strlen(name_true)]=' ';	
+	name_true[strlen(name)+1]=' ';
+	name_true[strlen(name)+2]='\0';
 	
+	printf("name_true sizeof: %ld\nname_true strlen: %ld\n",sizeof(name_true),strlen(name_true));
+
+	char * pSubstring=strstr(search,name_true);
+	if(pSubstring!=NULL)
+		{
+			//TODO remove substring
+			printf("Found:/%s/\n",name_true);
+			for(int i=0;i<strlen(name_true);i++)
+				{
+					pSubstring[i] = '=';
+				}
+		}
+	else
+		{
+			printf("name_true:%s\n",name_true);
+			//for(int i=0;i<strlen(name_true);i++)
+			//{
+				strcat(search,name_true);
+			//}
+			printf("final:%s\n",search);
+			
+		}
+	printf("now should clense\n");	
+	
+
 	//cleaning name_true
-	for(int i=0;i<strlen(name_true);i++){name_true[i]='\0';}
-	printf("%s\n",name_true);
+	for(int i=0;i<sizeof(name_true);i++){name_true[i]='\0';}
+	printf("after clense:/%s/\n",name_true);
 }
  ///////USE////////USE/////////USE/////////USE////////USE/////////USE/////////////////
 /////////////////////////////////////////////////////////////////////////////////////
