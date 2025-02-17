@@ -17,7 +17,7 @@ void help(){
 printf("\nList of availible inputs:\nhelp - show this dialog\nUSE - USE Flag configuration mode\nVIDEO_CARDS - VIDEO_CARDS configuration mode\nMAKEOPTS - MAKEOPTS configuration mode\nACCEPT_LICENSE - ACCEPT_LICENSE configuration mode\nexit - exit program without saving changes\n\n");
 }
 void action(char * name){
-	printf("%ld\n",strlen(name));
+
 	char name_true[strlen(name)+3];
 	name_true[0]=' ';
 	for(int i=0;i<strlen(name_true);i++)
@@ -26,34 +26,35 @@ void action(char * name){
 	name_true[strlen(name)+1]=' ';
 	name_true[strlen(name)+2]='\0';
 	
-	printf("name_true sizeof: %ld\nname_true strlen: %ld\n",sizeof(name_true),strlen(name_true));
 
 	char * pSubstring=strstr(search,name_true);
 	if(pSubstring!=NULL)
 		{
-			//TODO remove substring
-			printf("Found:/%s/\n",name_true);
-			for(int i=0;i<strlen(name_true);i++)
-				{
-					pSubstring[i] = '=';
-				}
+			//todo REMOVE CORRECT SPACES, sidequest
+			//printf("Found:/%s/\n",name_true);
+			for(int j=0;j<strlen(name_true)-1;j++){
+			for(int i=0;i<(strlen(search)-(strlen(search)-(strlen(pSubstring))));i++){
+			pSubstring[i]=pSubstring[i+1];
+			}
+		}
+
 		}
 	else
 		{
-			printf("name_true:%s\n",name_true);
+			//printf("name_true:%s\n",name_true);
 			//for(int i=0;i<strlen(name_true);i++)
 			//{
 				strcat(search,name_true);
 			//}
-			printf("final:%s\n",search);
+			//printf("final:%s\n",search);
 			
 		}
-	printf("now should clense\n");	
+	//printf("now should clense\n");	
 	
 
 	//cleaning name_true
 	for(int i=0;i<sizeof(name_true);i++){name_true[i]='\0';}
-	printf("after clense:/%s/\n",name_true);
+	//printf("after clense:/%s/\n",name_true);
 }
  ///////USE////////USE/////////USE/////////USE////////USE/////////USE/////////////////
 /////////////////////////////////////////////////////////////////////////////////////
@@ -91,7 +92,7 @@ do
 	scanf("%s",input);
 	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
 	else if(strcmp(input,"list")==0){printf("\n%s\n\n",search);}
-	else if(strcmp(input,"exit")!=0){action(input);}
+	else if(strcmp(input,"exit")!=0){action(input);printf("\n%s\n",search);}
 }
 while(strcmp(input,"exit")!=0);
 input[1]='\0';
@@ -102,7 +103,7 @@ input[1]='\0';
 
 void makeopts(char pcontents[lines][max_length]){
 
-char * search;
+//char * search;
 	for(int i=0;i<lines;i++)
 	{
 		search = strstr(pcontents[i],"MAKEOPTS");
@@ -117,15 +118,17 @@ do
 	printf("MAKEOPTSconf: ");
 	scanf("%s",input);
 	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
-	if(strcmp(input, "list")==0){printf("\n%s\n\n",search);}
+	else if(strcmp(input, "list")==0){printf("\n%s\n\n",search);}
+	else if(strcmp(input,"exit")!=0){action(input);printf("\n%s\n",search);}
 }
 while(strcmp(input,"exit")!=0);
 input[1]='\0';
 }
 
-
-
-
+//TODO complete function video_cards()
+void video_cards(char pcontents[lines][max_length]){}
+//TODO complete function accept_license()
+void accept_license(char pcontents[lines][max_length]){}
 
 
 
@@ -177,9 +180,13 @@ do
 	scanf("%s",input);
 	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
 	if(strcmp(input,"USE")==0){use(contents);}
-	else if(strcmp(input,"VIDEO_CARDS")==0){}
+	else if(strcmp(input,"VIDEO_CARDS")==0){
+		//video_card(contents);
+	}
 	else if(strcmp(input,"MAKEOPTS")==0){makeopts(contents);}
-	else if(strcmp(input,"ACCEPT_LICENSE")==0){}
+	else if(strcmp(input,"ACCEPT_LICENSE")==0){
+		//accept_license(contents);
+	}
 	else if(strcmp(input,"help")==0||strcmp(input,"h")==0){help();}
 	else if(strcmp(input,"exit")!=0){printf("unrecognized; type 'help' to see availible commands\n");}
 	}
