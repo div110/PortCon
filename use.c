@@ -4,7 +4,7 @@
 #include <string.h>
 
 
-
+//TODO all to lower/upper case
 
 char input[21];
 int lines=0;
@@ -16,6 +16,7 @@ char * search;
 void help(){
 printf("\nList of availible inputs:\nhelp - show this dialog\nUSE - USE Flag configuration mode\nVIDEO_CARDS - VIDEO_CARDS configuration mode\nMAKEOPTS - MAKEOPTS configuration mode\nACCEPT_LICENSE - ACCEPT_LICENSE configuration mode\nexit - exit program without saving changes\n\n");
 }
+//mark action
 void action(char * name){
 
 	char name_true[strlen(name)+3];
@@ -72,7 +73,7 @@ void action(char * name){
 //printf("Dereference: %s\n",search);
 //}
 
-
+//mark use
 void use(char pcontents[lines][max_length]){
 
 //char * search;
@@ -100,7 +101,7 @@ input[1]='\0';
  ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
 
-
+//mark makeopts
 void makeopts(char pcontents[lines][max_length]){
 
 //char * search;
@@ -125,8 +126,41 @@ while(strcmp(input,"exit")!=0);
 input[1]='\0';
 }
 
-//TODO complete function video_cards()
-void video_cards(char pcontents[lines][max_length]){}
+//mark video
+void video_cards(char pcontents[lines][max_length]){
+for(int i=0;i<lines;i++)
+{
+search = strstr(pcontents[i],"VIDEO_CARDS");
+if(search!=NULL){break;}
+}
+if(search!=NULL){search=search+13;
+search[strlen(search)-1]=' ';
+}
+do
+{
+	printf("VIDEO_CARDS: ");
+	scanf("%s",input);
+	
+	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
+	else if(strcmp(input, "list")==0){printf("\n%s\n\n",search);}
+	
+	else if(strcmp(input,"exit")!=0){
+		
+		if(strcmp(input,"nvidia")==0){action(input);}
+		else if(strcmp(input,"amdgpu")==0){action(input);}
+		else if(strcmp(input,"nouveau")==0){action(input);}
+		else if(strcmp(input,"radeonsi")==0){action(input);}
+		else if(strcmp(input,"intel")==0){action(input);}
+		else if(strcmp(input,"vc4")==0){action(input);}
+		else if(strcmp(input,"virgl")==0){action(input);}
+		else if(strcmp(input, "d3d12")==0){action(input);}
+		else{printf("Unrecognized Flag :( \n");}
+
+		printf("\n%s\n\n",search);}
+}
+while(strcmp(input,"exit")!=0);
+input[1]='\0';
+}
 //TODO complete function accept_license()
 void accept_license(char pcontents[lines][max_length]){}
 
@@ -135,7 +169,7 @@ void accept_license(char pcontents[lines][max_length]){}
 
 
 
-
+//mark main
 int main(int argc, char* argv[]){
 
 FILE *file;
@@ -173,16 +207,14 @@ index++;
 
 
 
-
+//mark loop
 do
 	{
 	printf("tool: ");
 	scanf("%s",input);
 	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
 	if(strcmp(input,"USE")==0){use(contents);}
-	else if(strcmp(input,"VIDEO_CARDS")==0){
-		//video_card(contents);
-	}
+	else if(strcmp(input,"VIDEO_CARDS")==0){video_cards(contents);}
 	else if(strcmp(input,"MAKEOPTS")==0){makeopts(contents);}
 	else if(strcmp(input,"ACCEPT_LICENSE")==0){
 		//accept_license(contents);
