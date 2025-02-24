@@ -240,6 +240,19 @@ int main(int argc, char* argv[]){
 //if(getuid()!=0){printf("Tool requires Root privileges\n");exit(1);}
 if(access("/etc/portage/make.conf", W_OK)!=0){printf("RW permission required: /etc/portage/make.conf\n");exit(1);}
 system("clear");
+//printing
+//printf("      ___          ___          ___      ___          ___          ___          ___     \n");
+//printf("     /\\  \\        /\\  \\        /\\  \\    /\\  \\        /\\  \\        /\\  \\        /\\__\\    \n");
+//printf("    /  \\  \\      /  \\  \\      /  \\  \\   \\ \\  \\      /  \\  \\      /  \\  \\      /  |  |   \n");
+//printf("   / /\\ \\  \\    / /\\ \\  \\    / /\\ \\  \\   \\ \\  \\    / /\\ \\  \\    / /\\ \\  \\    / | |  |   \n");
+//printf("  /  \\ \\ \\  \\  / /  \\ \\  \\  /  \\ \\ \\  \\  /  \\  \\  / /  \\ \\  \\  / /  \\ \\  \\  / /| |  |__ \n");
+//printf(" / /\\ \\ \\ \\__\\/ /__/ \\ \\__\\/ /\\ \\ \\ \\__\\/ /\\ \\__\\/ /__/ \\ \\__\\/ /__/ \\ \\__\\/ / | | /\\__\\\n");
+//printf(" \\/__\\ \\/ /  /\\ \\  \\ / /  /\\/_|  \\/ /  / /  \\/__/\\ \\  \\  \\/__/\\ \\  \\ / /  /\\/__| |/ /  / \n");
+//printf("      \\  /  /  \\ \\  / /  /    | |  /  / /  /      \\ \\  \\       \\ \\  / /  /     | / /  / \n");
+//printf("       \\/__/    \\ \\/ /  /     | |\\/__/\\/__/        \\ \\  \\       \\ \\/ /  /      |  /  /  \n");
+//printf("                 \\  /  /      | |  |                \\ \\__\\       \\  /  /       / /  /   \n");
+//printf("                  \\/__/        \\|__|                 \\/__/        \\/__/        \\/__/        \n");
+printf("\n			PortCon is a simple CLI Portage configuration tool!\n\n");
 FILE *file;
 file = fopen("/etc/portage/make.conf","r");
 char buf[100000];
