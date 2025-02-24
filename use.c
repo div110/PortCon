@@ -236,12 +236,15 @@ input[1]='\0';
 
 //mark main
 int main(int argc, char* argv[]){
-if(getuid()!=0){printf("Tool requires Root privileges\n");exit(1);}
+//uncomment
+//if(getuid()!=0){printf("Tool requires Root privileges\n");exit(1);}
+system("clear");
+
 FILE *file;
 file = fopen("/etc/portage/make.conf","r");
 char buf[100000];
-fscanf(file,"%[^#]",buf);
-printf("buffer: \n%s\n", buf);
+fscanf(file,"%[^~]",buf);
+//printf("buffer: \n%s\n", buf);
 //fclose(file);
 lines=0;
 length=0;
@@ -283,12 +286,12 @@ do
 	else if(strcmp(input,"VIDEO_CARDS")==0){video_cards(contents);}
 	else if(strcmp(input,"MAKEOPTS")==0){makeopts(contents);}
 	else if(strcmp(input,"ACCEPT_LICENSE")==0){accept_license(contents);}
-	else if(strcmp(input,"HELP")==0||strcmp(input,"H")==0){help();}
-	else if(strcmp(input,"save")==0&&strcmp(input,"s")==0){file_write=true;}
+	else if(strcmp(input,"HELP")==0||strcmp(input,"H")==0||strcmp(input,"LIST")==0){help();}
+	else if(strcmp(input,"SAVE")==0||strcmp(input,"S")==0){file_write=true;printf("Writing = true\n");}
 	else if(strcmp(input,"EXIT")!=0){printf("unrecognized; type 'help' to see availible commands\n");}
 	}
 	while(strcmp(input,"EXIT")!=0); //this is stupid non-sense
-
+if(file_write==false){
 do{
 printf("Save changes?[y/n]: ");
 scanf("%s",input);
@@ -301,7 +304,7 @@ switch(strcmp(input,"y")){
 		file_write=true;break;
 	default:break;
 }
-
+}
 for(int n=0;n<strlen(buf);n++){buf[n]='\0';}
 int loko=0;
 for(int i=0;i<lines;i++){
@@ -316,10 +319,7 @@ for(int i=0;i<lines;i++){
 	loko++;
 	}
 }
-buf[strlen(buf)]='\n';
-buf[strlen(buf)+1]='#';
-buf[strlen(buf)+2]='\0';
-//printf("\n\n\n\n\n\n%s",buf);
+//buf[strlen(buf)]='#';buf[strlen(buf)+1]='#';buf[strlen(buf)+2]='\0';printf("\n\n\n\n\n\n%s",buf);
 
 
 if(file_write){
