@@ -4,7 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <zconf.h> 
-
+#include <unistd.h>
 //TODO all to lower/upper case
 char input[21];
 int lines=0;
@@ -238,8 +238,8 @@ input[1]='\0';
 int main(int argc, char* argv[]){
 //uncomment
 //if(getuid()!=0){printf("Tool requires Root privileges\n");exit(1);}
+if(access("/etc/portage/make.conf", W_OK)!=0){printf("RW permission required: /etc/portage/make.conf\n");exit(1);}
 system("clear");
-
 FILE *file;
 file = fopen("/etc/portage/make.conf","r");
 char buf[100000];
