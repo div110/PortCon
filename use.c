@@ -3,16 +3,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-
+#include <zconf.h> 
 
 //TODO all to lower/upper case
-
 char input[21];
 int lines=0;
 int max_length;
 int length=0;
 char * search;
-
+bool file_write=false;
 
 //mark upperlower
 void upperLower(char * pString,bool option){
@@ -198,19 +197,19 @@ do
 	if(strlen(input)>30){printf("BUFFER OVERFLOW\n");exit(1);}
 	else if(strcmp(input,"LIST")==0){printf("\n%s\n\n",search);}
 	else if(strcmp(input,"EXIT")!=0){
-		if(strcmp(input, "GPL-COMPATIBLE")==0){action(input);printf("\n%s\n\n",search);}
-		else if(strcmp(input,"FSF-APPROVED")==0){action(input);printf("\n%s\n\n",search);}
-		else if(strcmp(input,"MISC-FREE")==0){action(input);printf("\n%s\n\n",search);}
-		else if(strcmp(input,"EULA")==0){action(input);printf("\n%s\n\n",search);}
-		else if(strcmp(input,"OSI-APPROVED")==0){action(input);printf("\n%s\n\n",search);}
-		else if(strcmp(input,"OSI-APPROVED-FREE")==0){action(input);printf("\n%s\n\n",search);}
-		else if(strcmp(input,"OSI-APPROVED-NONFREE")==0){action(input);printf("\n%s\n\n",search);}
-		else if(strcmp(input,"BINARY-REDISTRUTABLE")==0){action(input);printf("\n%s\n\n",search);}
-		else if(strcmp(input,"FSF-APPROVED-OTHER")==0){action(input);printf("\n%s\n\n",search);}
-		else if(strcmp(input,"MISC-FREE-DOCS")==0){action(input);printf("\n%s\n\n",search);}
-		else if(strcmp(input,"FREE")==0){action(input);printf("\n%s\n\n",search);}
-		else if(strcmp(input,"FREE-SOFTWARE")==0){action(input);printf("\n%s\n\n",search);}
-		else if(strcmp(input,"FREE-DOCUMENTS")==0){action(input);printf("\n%s\n\n",search);}
+		if(strcmp(input, "@GPL-COMPATIBLE")==0){action(input);printf("\n%s\n\n",search);}
+		else if(strcmp(input,"@FSF-APPROVED")==0){action(input);printf("\n%s\n\n",search);}
+		else if(strcmp(input,"@MISC-FREE")==0){action(input);printf("\n%s\n\n",search);}
+		else if(strcmp(input,"@EULA")==0){action(input);printf("\n%s\n\n",search);}
+		else if(strcmp(input,"@OSI-APPROVED")==0){action(input);printf("\n%s\n\n",search);}
+		else if(strcmp(input,"@OSI-APPROVED-FREE")==0){action(input);printf("\n%s\n\n",search);}
+		else if(strcmp(input,"@OSI-APPROVED-NONFREE")==0){action(input);printf("\n%s\n\n",search);}
+		else if(strcmp(input,"@BINARY-REDISTRUTABLE")==0){action(input);printf("\n%s\n\n",search);}
+		else if(strcmp(input,"@FSF-APPROVED-OTHER")==0){action(input);printf("\n%s\n\n",search);}
+		else if(strcmp(input,"@MISC-FREE-DOCS")==0){action(input);printf("\n%s\n\n",search);}
+		else if(strcmp(input,"@FREE")==0){action(input);printf("\n%s\n\n",search);}
+		else if(strcmp(input,"@FREE-SOFTWARE")==0){action(input);printf("\n%s\n\n",search);}
+		else if(strcmp(input,"@FREE-DOCUMENTS")==0){action(input);printf("\n%s\n\n",search);}
 		else{
 			printf("Flag not recognized\nUse it anyway?\n");
 			char option[20];
@@ -237,13 +236,13 @@ input[1]='\0';
 
 //mark main
 int main(int argc, char* argv[]){
-
+if(getuid()!=0){printf("Tool requires Root privileges\n");exit(1);}
 FILE *file;
 file = fopen("/etc/portage/make.conf","r");
 char buf[100000];
 fscanf(file,"%[^#]",buf);
 printf("buffer: \n%s\n", buf);
-fclose(file);
+//fclose(file);
 lines=0;
 length=0;
 max_length=0;
@@ -283,14 +282,25 @@ do
 	if(strcmp(input,"USE")==0){use(contents);}
 	else if(strcmp(input,"VIDEO_CARDS")==0){video_cards(contents);}
 	else if(strcmp(input,"MAKEOPTS")==0){makeopts(contents);}
-	else if(strcmp(input,"ACCEPT_LICENSE")==0){accept_license(contents);
-	}
+	else if(strcmp(input,"ACCEPT_LICENSE")==0){accept_license(contents);}
 	else if(strcmp(input,"HELP")==0||strcmp(input,"H")==0){help();}
+	else if(strcmp(input,"save")==0&&strcmp(input,"s")==0){file_write=true;}
 	else if(strcmp(input,"EXIT")!=0){printf("unrecognized; type 'help' to see availible commands\n");}
 	}
 	while(strcmp(input,"EXIT")!=0); //this is stupid non-sense
 
+do{
+printf("Save changes?[y/n]: ");
+scanf("%s",input);
+upperLower(input,false);
+}
+while(strcmp(input,"y")!=0&&strcmp(input,"n")!=0);
 
+switch(strcmp(input,"y")){
+	case 0:
+		file_write=true;break;
+	default:break;
+}
 
 for(int n=0;n<strlen(buf);n++){buf[n]='\0';}
 int loko=0;
@@ -306,7 +316,15 @@ for(int i=0;i<lines;i++){
 	loko++;
 	}
 }
-printf("\n\n\n\n\n\n%s",buf);
+buf[strlen(buf)]='\n';
+buf[strlen(buf)+1]='#';
+buf[strlen(buf)+2]='\0';
+//printf("\n\n\n\n\n\n%s",buf);
 
 
+if(file_write){
+file = fopen("/etc/portage/make.conf","w");
+fprintf(file,"%s",buf);
+}
+fclose(file);
 return 0;}
