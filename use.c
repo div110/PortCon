@@ -299,7 +299,7 @@ do
 	else if(strcmp(input,"VIDEO_CARDS")==0){video_cards(contents);}
 	else if(strcmp(input,"MAKEOPTS")==0){makeopts(contents);}
 	else if(strcmp(input,"ACCEPT_LICENSE")==0){accept_license(contents);}
-	else if(strcmp(input,"HELP")==0||strcmp(input,"H")==0||strcmp(input,"LIST")==0){help();}
+	else if(strcmp(input,"HELP")==0||strcmp(input,"H")==0||strcmp(input,"LIST")==0||strcmp(input,"LS")==0){help();}
 	else if(strcmp(input,"SAVE")==0||strcmp(input,"S")==0){file_write=true;printf("Writing = true\n");}
 	else if(strcmp(input,"EXIT")!=0){printf("unrecognized; type 'help' to see availible commands\n");}
 	}
@@ -341,3 +341,4 @@ fprintf(file,"%s",buf);
 }
 fclose(file);
 return 0;}
+
