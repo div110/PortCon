@@ -23,7 +23,7 @@ sudo emerge --ask sys-devel/gcc make
 ### Build & Install
 Clone the repository and compile Portcon:
 ```sh
-git clone https://github.com/yourusername/portcon.git
+git clone https://github.com/div110/portcon
 cd portcon
 gcc -o portcon portcon.c
 sudo cp portcon /usr/local/bin/
