@@ -211,6 +211,7 @@ do
 		else if(strcmp(input,"@FREE-SOFTWARE")==0){action(input);printf("\n%s\n\n",search);}
 		else if(strcmp(input,"@FREE-DOCUMENTS")==0){action(input);printf("\n%s\n\n",search);}
 		else{
+			printf("Recognized flags:\n @GPL-COMPATIBLE\n @FSF-APPROVED\n @MISC-FREE\n @EULA\n @OSI-APPROVED\n @OSI-APPROVED-FREE\n @OSI-APPROVED-NONFREE\n @BINARY-REDISTRUTABLE\n @FSF-APPROVED-OTHER\n @MISC-FREE-DOCS\n @FREE\n @FREE-SOFTWARE\n @FREE-DOCUMENTS\n");
 			printf("Flag not recognized\nUse it anyway?\n");
 			char option[20];
 			do{
@@ -301,6 +302,7 @@ do
 	else if(strcmp(input,"ACCEPT_LICENSE")==0){accept_license(contents);}
 	else if(strcmp(input,"HELP")==0||strcmp(input,"H")==0||strcmp(input,"LIST")==0||strcmp(input,"LS")==0){help();}
 	else if(strcmp(input,"SAVE")==0||strcmp(input,"S")==0){file_write=true;printf("Writing = true\n");}
+	else if(strcmp(input,"CLEAR")==0){system("clear");}
 	else if(strcmp(input,"EXIT")!=0){printf("unrecognized; type 'help' to see availible commands\n");}
 	}
 	while(strcmp(input,"EXIT")!=0); //this is stupid non-sense
@@ -337,7 +339,7 @@ for(int i=0;i<lines;i++){
 
 if(file_write){
 file = fopen("/etc/portage/make.conf","w");
-fprintf(file,"%s",buf);
+//fprintf(file,"%s",buf);
 }
 fclose(file);
 return 0;}
