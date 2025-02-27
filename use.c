@@ -105,6 +105,7 @@ do
 	upperLower(input,false);
 	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
 	else if(strcmp(input,"list")==0){printf("\n%s\n\n",search);}
+	else if(strcmp(input,"clear")==0){system("clear");}
 	else if(strcmp(input,"exit")!=0){action(input);printf("\n%s\n\n",search);}
 }
 while(strcmp(input,"exit")!=0);
@@ -135,6 +136,7 @@ do
 	upperLower(input,false);
 	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
 	else if(strcmp(input, "list")==0){printf("\n%s\n\n",search);}
+	else if(strcmp(input, "clear")==0){system("clear");}
 	else if(strcmp(input,"exit")!=0){action(input);printf("\n%s\n\n",search);}
 }
 while(strcmp(input,"exit")!=0);
@@ -160,7 +162,7 @@ do
 	upperLower(input,false);
 	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
 	else if(strcmp(input, "list")==0){printf("\n%s\n\n",search);}
-	
+	else if(strcmp(input, "clear")==0){system("clear");}
 	else if(strcmp(input,"exit")!=0){
 		
 		if(strcmp(input,"nvidia")==0){action(input);}
@@ -195,7 +197,8 @@ do
 	scanf("%s",input);
 	upperLower(input,true);
 	if(strlen(input)>30){printf("BUFFER OVERFLOW\n");exit(1);}
-	else if(strcmp(input,"LIST")==0){printf("\n%s\n\n",search);}
+	else if(strcmp(input,"LIST")==0||strcmp(input,"LS")==0){printf("\n%s\n\n",search);}
+	else if(strcmp(input,"CLEAR")==0){system("clear");}
 	else if(strcmp(input,"EXIT")!=0){
 		if(strcmp(input, "@GPL-COMPATIBLE")==0){action(input);printf("\n%s\n\n",search);}
 		else if(strcmp(input,"@FSF-APPROVED")==0){action(input);printf("\n%s\n\n",search);}
@@ -210,8 +213,11 @@ do
 		else if(strcmp(input,"@FREE")==0){action(input);printf("\n%s\n\n",search);}
 		else if(strcmp(input,"@FREE-SOFTWARE")==0){action(input);printf("\n%s\n\n",search);}
 		else if(strcmp(input,"@FREE-DOCUMENTS")==0){action(input);printf("\n%s\n\n",search);}
+		else if(strcmp(input,"HELP")==0||strcmp(input,"H")==0){
+		printf("Recognized flags:\n @GPL-COMPATIBLE\n @FSF-APPROVED\n @MISC-FREE\n @EULA\n @OSI-APPROVED\n @OSI-APPROVED-FREE\n @OSI-APPROVED-NONFREE\n @BINARY-REDISTRUTABLE\n @FSF-APPROVED-OTHER\n @MISC-FREE-DOCS\n @FREE\n @FREE-SOFTWARE\n @FREE-DOCUMENTS\n");
+
+		}
 		else{
-			printf("Recognized flags:\n @GPL-COMPATIBLE\n @FSF-APPROVED\n @MISC-FREE\n @EULA\n @OSI-APPROVED\n @OSI-APPROVED-FREE\n @OSI-APPROVED-NONFREE\n @BINARY-REDISTRUTABLE\n @FSF-APPROVED-OTHER\n @MISC-FREE-DOCS\n @FREE\n @FREE-SOFTWARE\n @FREE-DOCUMENTS\n");
 			printf("Flag not recognized\nUse it anyway?\n");
 			char option[20];
 			do{
