@@ -1,0 +1,9 @@
+USE=" kde -X wayland pulseaudio -jack "
+MAKEOPTS=" -j5 -l8 "
+CFLAGS=" -O2 -march=native "
+ACCEPT_LICENSE=" @FREE @FSF-APPROVED-FREE "
+VIDEO_CARDS=" nvidia "
+CXXFLAGS=""
+
+
+#who knows
