@@ -1,3 +1,5 @@
 all:
-	gcc portcon.c -o portcon
-	#mv portcon /usr/bin/
+	gcc portcon.c -o bin/portcon
+	
+clean:
+	rm bin/portcon
