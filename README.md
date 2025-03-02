@@ -5,10 +5,14 @@ Portcon is a slim and efficient command-line tool designed for managing Gentoo's
 ---
 
 ## ✨ Features
-- 🔹 Easily manage USE flags
-- 🔹 Optimize compilation through `MAKEOPTS`
-- 🔹 Configure various Portage options
-- 🔹 Lightweight and blazing fast, written in C
+ 🔹 Easily manage USE flags
+ 
+ 🔹 Optimize compilation through `MAKEOPTS`
+
+ 🔹 Configure various Portage options
+ 
+ 🔹 Lightweight and blazing fast, written in C
+ 
 
 ---
 
@@ -25,8 +29,7 @@ Clone the repository and compile Portcon:
 ```sh
 git clone https://github.com/div110/portcon
 cd portcon
-gcc -o portcon portcon.c
-sudo cp portcon /usr/local/bin/
+make
 ```
 
 ---
@@ -39,7 +42,7 @@ Portcon modifies `/etc/portage/make.conf` directly. It is recommended to back up
 ## 🗑 Uninstallation
 To remove Portcon:
 ```sh
-sudo rm /usr/local/bin/portcon
+make clean
 ```
 
 ---
