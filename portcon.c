@@ -103,7 +103,7 @@ do
 	printf("USEconf: ");
 	scanf("%s",input);
 	upperLower(input,false);
-	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
+	if(strlen(input)>2000000){printf("BUFFER OVERFLOW\n");exit(1);}
 	else if(strcmp(input,"list")==0){printf("\n%s\n\n",search);}
 	else if(strcmp(input,"clear")==0){system("clear");}
 	else if(strcmp(input,"exit")!=0){action(input);printf("\n%s\n\n",search);}
@@ -312,10 +312,14 @@ printf("                  \\/__/        \\|__|                 \\/__/        \\/
 printf("\n			PortCon is a simple CLI Portage configuration tool!\n\n");
 FILE *file;
 file = fopen("/etc/portage/make.conf","r");
-char buf[100000];
+fseek(file,0,SEEK_END);
+int size = ftell(file);
+//printf("\n\nX	%d    X\n\n",size);
+fseek(file,0,SEEK_SET);
+char *buf = calloc((size),sizeof(char));
+//free(size);
 fscanf(file,"%[^~]",buf);
-printf("buffer: \n%s\n", buf);
-//fclose(file);
+//printf("buffer: \n%s\n", buf);
 lines=0;
 length=0;
 max_length=0;
@@ -342,7 +346,7 @@ index++;
 }
 }
 
-
+free(buf);
 
 
 //mark loop
@@ -380,7 +384,17 @@ switch(strcmp(input,"y")){
 	default:break;
 }
 }
-for(int n=0;n<strlen(buf);n++){buf[n]='\0';}
+size=0;
+for(int i=0;i<lines;i++){
+for(int j=0;j<max_length;j++){
+	if(contents[i][j]!='\0'){
+		size++;
+	}	
+}
+}
+size=size+lines;
+printf("final size: %d\n",size);
+buf=calloc(size+2,sizeof(char));
 int loko=0;
 for(int i=0;i<lines;i++){
 
@@ -394,13 +408,11 @@ for(int i=0;i<lines;i++){
 	loko++;
 	}
 }
-//buf[strlen(buf)]='#';buf[strlen(buf)+1]='#';buf[strlen(buf)+2]='\0';printf("\n\n\n\n\n\n%s",buf);
-
-
 if(file_write){
 file = fopen("/etc/portage/make.conf","w");
 fprintf(file,"%s",buf);
 }
 fclose(file);
+free(buf);
 return 0;}
 
