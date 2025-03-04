@@ -13,6 +13,13 @@ int length=0;
 char * search;
 bool file_write=false;
 
+enum Sizes {
+SIZE_CHAR=4,
+SIZE_INT=4,
+SIZE_PTR=8
+};
+
+
 //mark upperlower
 void upperLower(char * pString,bool option){
 if(option==true){
@@ -316,7 +323,7 @@ fseek(file,0,SEEK_END);
 int size = ftell(file);
 //printf("\n\nX	%d    X\n\n",size);
 fseek(file,0,SEEK_SET);
-char *buf = calloc((size),sizeof(char));
+char *buf = calloc((size),SIZE_CHAR);
 //free(size);
 fscanf(file,"%[^~]",buf);
 //printf("buffer: \n%s\n", buf);
@@ -394,7 +401,7 @@ for(int j=0;j<max_length;j++){
 }
 size=size+lines;
 printf("final size: %d\n",size);
-buf=calloc(size+2,sizeof(char));
+buf=calloc(size+2,SIZE_CHAR);
 int loko=0;
 for(int i=0;i<lines;i++){
 
