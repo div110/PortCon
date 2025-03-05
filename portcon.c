@@ -6,7 +6,7 @@
 #include <zconf.h> 
 #include <unistd.h>
 //TODO all to lower/upper case
-char input[21];
+char input[26];
 int lines=0;
 int max_length;
 int length=0;
@@ -18,6 +18,8 @@ SIZE_CHAR=4,
 SIZE_INT=4,
 SIZE_PTR=8
 };
+
+enum Limits {STRING_LIMIT=25};
 
 
 //mark upperlower
@@ -108,10 +110,10 @@ search[strlen(search)-1]=' ';
 do
 {
 	printf("USEconf: ");
-	scanf("%s",input);
+	fgets(input,STRING_LIMIT,stdin);
+	input[strlen(input)-1]='\0';
 	upperLower(input,false);
-	if(strlen(input)>2000000){printf("BUFFER OVERFLOW\n");exit(1);}
-	else if(strcmp(input,"list")==0){printf("\n%s\n\n",search);}
+	if(strcmp(input,"list")==0||strcmp(input,"ls")==0){printf("\n%s\n\n",search);}
 	else if(strcmp(input,"clear")==0){system("clear");}
 	else if(strcmp(input,"exit")!=0){action(input);printf("\n%s\n\n",search);}
 }
@@ -134,9 +136,9 @@ search[strlen(search)-1]=' ';
 
 do{
 	printf("CFLAGSconf: ");
-	scanf("%s",input);
-	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
-	else if(strcmp(input,"clear")==0){system("clear");}
+	fgets(input,STRING_LIMIT,stdin);
+	input[strlen(input)-1]='\0';
+	if(strcmp(input,"clear")==0){system("clear");}
 	else if(strcmp(input, "list")==0||strcmp(input, "ls")==0||strcmp(input,"LIST")==0||strcmp(input,"LS")==0){printf("\n\n%s\n", search);}
 	else if(strcmp(input, "exit")!=0){action(input);printf("\n%s\n\n",search);}
 }
@@ -158,9 +160,9 @@ search[strlen(search)-1]=' ';
 
 do {
 printf("CXXFLAGSconf: ");
-scanf("%s",input);
-if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
-else if(strcmp(input,"clear")==0){system("clear");}
+fgets(input,STRING_LIMIT,stdin);
+input[strlen(input)-1]='\0';
+if(strcmp(input,"clear")==0){system("clear");}
 else if(strcmp(input,"list")==0||strcmp(input,"ls")==0||strcmp(input,"LIST")==0||strcmp(input,"LS")==0){printf("\n%s\n\n", search);}
 else if(strcmp(input,"same")==0||strcmp(input,"SAME")==0){action("${CFLAGS}");printf("\n%s\n\n",search);}
 else if(strcmp(input,"exit")!=0){action(input);printf("\n%s\n\n",search);}
@@ -189,10 +191,10 @@ search[strlen(search)-1]=' ';
 do
 {
 	printf("MAKEOPTSconf: ");
-	scanf("%s",input);
+	fgets(input,STRING_LIMIT,stdin);
+	input[strlen(input)-1]='\0';
 	upperLower(input,false);
-	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
-	else if(strcmp(input, "list")==0){printf("\n%s\n\n",search);}
+	if(strcmp(input, "list")==0){printf("\n%s\n\n",search);}
 	else if(strcmp(input, "clear")==0){system("clear");}
 	else if(strcmp(input,"exit")!=0){action(input);printf("\n%s\n\n",search);}
 }
@@ -215,10 +217,10 @@ search[strlen(search)-1]=' ';
 do
 {
 	printf("VIDEO_CARDS: ");
-	scanf("%s",input);
+	fgets(input,STRING_LIMIT,stdin);
+	input[strlen(input)-1]='\0';
 	upperLower(input,false);
-	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
-	else if(strcmp(input, "list")==0){printf("\n%s\n\n",search);}
+	if(strcmp(input, "list")==0){printf("\n%s\n\n",search);}
 	else if(strcmp(input, "clear")==0){system("clear");}
 	else if(strcmp(input,"exit")!=0){
 		
@@ -251,10 +253,10 @@ search[strlen(search)-1]=' ';
 do
 {
 	printf("ACCEPT_LICENSE: ");
-	scanf("%s",input);
+	fgets(input,STRING_LIMIT,stdin);
+	input[strlen(input)-1]='\0';
 	upperLower(input,true);
-	if(strlen(input)>30){printf("BUFFER OVERFLOW\n");exit(1);}
-	else if(strcmp(input,"LIST")==0||strcmp(input,"LS")==0){printf("\n%s\n\n",search);}
+	if(strcmp(input,"LIST")==0||strcmp(input,"LS")==0){printf("\n%s\n\n",search);}
 	else if(strcmp(input,"CLEAR")==0){system("clear");}
 	else if(strcmp(input,"EXIT")!=0){
 		if(strcmp(input, "@GPL-COMPATIBLE")==0){action(input);printf("\n%s\n\n",search);}
@@ -279,7 +281,7 @@ do
 			char option[20];
 			do{
 				printf("\n[y/n]: ");
-				scanf("%s",option);
+				scanf("%1s",option);
 			}
 			while(strlen(option)!=1);
 			(strcmp(option,"y")==0) ? action(input) : printf("trashing...\n");
@@ -360,9 +362,9 @@ free(buf);
 do
 	{
 	printf("tool: ");
-	scanf("%s",input);
+	fgets(input,STRING_LIMIT,stdin);
+	input[strlen(input)-1]='\0';
 	upperLower(input,true);
-	if(strlen(input)>20){printf("BUFFER OVERFLOW\n");exit(1);}
 	//
 	if(strcmp(input,"USE")==0){use(contents);}
 	else if(strcmp(input,"VIDEO_CARDS")==0){video_cards(contents);}
@@ -380,7 +382,7 @@ do
 if(file_write==false){
 do{
 printf("Save changes?[y/n]: ");
-scanf("%s",input);
+scanf("%1s",input);
 upperLower(input,false);
 }
 while(strcmp(input,"y")!=0&&strcmp(input,"n")!=0);
@@ -400,7 +402,7 @@ for(int j=0;j<max_length;j++){
 }
 }
 size=size+lines;
-printf("final size: %d\n",size);
+//printf("final size: %d\n",size);
 buf=calloc(size+2,SIZE_CHAR);
 int loko=0;
 for(int i=0;i<lines;i++){
