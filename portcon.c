@@ -112,8 +112,7 @@ do
 	printf("USEconf: ");
 	fgets(input,STRING_LIMIT,stdin);
 	input[strlen(input)-1]='\0';
-	upperLower(input,false);
-	if(strcmp(input,"list")==0||strcmp(input,"ls")==0){printf("\n%s\n\n",search);}
+	if(strcmp(input,"list")==0||strcmp(input,"ls")==0||strcmp(input,"LIST")==0||strcmp(input,"LS")==0){printf("\n%s\n\n",search);}
 	else if(strcmp(input,"clear")==0){system("clear");}
 	else if(strcmp(input,"exit")!=0){action(input);printf("\n%s\n\n",search);}
 }
