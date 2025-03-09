@@ -325,6 +325,7 @@ int size = ftell(file);
 //printf("\n\nX	%d    X\n\n",size);
 fseek(file,0,SEEK_SET);
 char *buf = calloc((size),SIZE_CHAR);
+if(buf==NULL){printf("Couldn't allocate enough space\n")exit(1);}
 //free(size);
 fscanf(file,"%[^~]",buf);
 //printf("buffer: \n%s\n", buf);
@@ -403,6 +404,7 @@ for(int j=0;j<max_length;j++){
 size=size+lines;
 //printf("final size: %d\n",size);
 buf=calloc(size+2,SIZE_CHAR);
+if(buf == NULL){printf("Couldn't allocate enough memory\n");exit(1);}
 int loko=0;
 for(int i=0;i<lines;i++){
 
