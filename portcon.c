@@ -325,7 +325,7 @@ int size = ftell(file);
 //printf("\n\nX	%d    X\n\n",size);
 fseek(file,0,SEEK_SET);
 char *buf = calloc((size),SIZE_CHAR);
-if(buf==NULL){printf("Couldn't allocate enough space\n")exit(1);}
+if(buf==NULL){printf("Couldn't allocate enough space\n");exit(1);}
 //free(size);
 fscanf(file,"%[^~]",buf);
 //printf("buffer: \n%s\n", buf);
