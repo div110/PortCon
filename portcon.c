@@ -5,18 +5,19 @@
 #include <ctype.h>
 #include <zconf.h> 
 #include <unistd.h>
-//TODO all to lower/upper case
+#include <stdint.h>
+
 char input[26];
-int lines=0;
-int max_length;
-int length=0;
+uint8_t lines=0;
+uint16_t max_length;
+uint16_t length=0;
 char * search;
 bool file_write=false;
 
 enum Sizes {
-SIZE_CHAR=4,
-SIZE_INT=4,
-SIZE_PTR=8
+SIZE_CHAR=sizeof(char),
+SIZE_INT=sizeof(int),
+SIZE_PTR=sizeof(search)
 };
 
 enum Limits {STRING_LIMIT=25};
@@ -321,7 +322,7 @@ printf("\n			PortCon is a simple CLI Portage configuration tool!\n\n");
 FILE *file;
 file = fopen("/etc/portage/make.conf","r");
 fseek(file,0,SEEK_END);
-int size = ftell(file);
+uint8_t size = ftell(file);
 //printf("\n\nX	%d    X\n\n",size);
 fseek(file,0,SEEK_SET);
 char *buf = calloc((size),SIZE_CHAR);
@@ -346,7 +347,7 @@ for(int i=0;i<lines;i++){for(int j=0;j<max_length;j++){contents[i][j]='\0';}}
 
 
 lines=0;
-int index=0;
+uint16_t index=0;
 for(int loko=0;loko<strlen(buf);loko++){
 if(buf[loko]=='\n'){lines++;index=0;}
 else{contents[lines][index]=buf[loko];
@@ -405,7 +406,7 @@ size=size+lines;
 //printf("final size: %d\n",size);
 buf=calloc(size+2,SIZE_CHAR);
 if(buf == NULL){printf("Couldn't allocate enough memory\n");exit(1);}
-int loko=0;
+uint32_t loko=0;
 for(int i=0;i<lines;i++){
 
 
