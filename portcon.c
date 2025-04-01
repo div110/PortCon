@@ -32,8 +32,25 @@ else{
 for(int i=0;i<strlen(pString);i++){pString[i]=tolower(pString[i]);}
 }
 }
+//mark package
+void package(){
+FILE * filePackage;
+//filePackage is null ==>> permissions
 
+filePackage = fopen("/etc/portage/package.use/packageTry","w");
+while(strcmp(input,"exit")!=0){
+printf("PACKAGE: ");
+fgets(input,STRING_LIMIT,stdin);
+input[strlen(input)-1]='\0';
+upperLower(input,false);
+if(strstr(input," ")==NULL||strstr(input,"/")==NULL){printf("BAD USAGE: [category]/[name] [USEflag]\n");}
+else{fprintf(filePackage,"%s\n",input);}
+printf("%s\n",input);
+//if(strcmp(input,"exit")==0){printf("%s",input);}
 
+}
+fclose(filePackage);
+}
 
 //mark help
 void help(){
@@ -373,6 +390,9 @@ do
 	else if(strcmp(input,"ACCEPT_LICENSE")==0){accept_license(contents);}
 	else if(strcmp(input,"CFLAGS")==0){cflags(contents);}
 	else if(strcmp(input,"CXXFLAGS")==0){cxxflags(contents);}
+	else if(strcmp(input,"PACKAGE")==0){printf("package!\n");
+	package();
+	}
 	//
 	else if(strcmp(input,"HELP")==0||strcmp(input,"H")==0||strcmp(input,"LIST")==0||strcmp(input,"LS")==0){help();}
 	else if(strcmp(input,"SAVE")==0||strcmp(input,"S")==0){file_write=true;printf("Writing = true\n");}
