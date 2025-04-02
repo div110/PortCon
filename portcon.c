@@ -39,31 +39,34 @@ FILE * filePackage;
 //char * fileName=calloc(SIZE_CHAR,40);
 //FOR STRCAT both need to be char[], i might make both pointers, i think they must be declared the same way?
 
-char fileName[40]="/etc/portage/package.use/";
+char fileName[40];
 char inputCOPY[STRING_LIMIT];
 if(filePackage==NULL){printf("Can't open file\n"); exit(1);}
 
-while(strcmp(input,"exit")!=0){
+
+while(true){
+strcpy(fileName,"/etc/portage/package.use/");
 printf("PACKAGE: ");
 fgets(input,STRING_LIMIT,stdin);
 input[strlen(input)-1]='\0';
+if(strcmp(input,"exit")==0){break;}
 upperLower(input,false);
 strcpy(inputCOPY,input);
-*strstr(inputCOPY,"/")='_';
 printf("%s\n",inputCOPY);
-strcat(fileName,inputCOPY);
 
 
 
-filePackage = fopen(fileName,"w");
-filePackage = fopen("/etc/portage/package.use/packageTry","w");
+//filePackage = fopen("/etc/portage/package.use/packageTry","w");
 if(strstr(input," ")==NULL||strstr(input,"/")==NULL){printf("BAD USAGE: [category]/[name] [USEflag]\n");}
-else{fprintf(filePackage,"%s\n",input);}
-printf("%s\n",input);
-//if(strcmp(input,"exit")==0){printf("%s",input);}
-
+else{
+	*strstr(inputCOPY," ")='\0';
+	*strstr(inputCOPY,"/")='_';
+	strcat(fileName,inputCOPY);
+	filePackage = fopen(fileName,"w");
+	fprintf(filePackage,"%s\n",input);
+	fclose(filePackage);
 }
-fclose(filePackage);
+}
 }
 
 //mark help
