@@ -23,16 +23,16 @@ SIZE_PTR=sizeof(search)
 enum Limits {STRING_LIMIT=25};
 
 
-//mark upperlower
 void upperLower(char * pString,bool option){
 if(option==true){
 for(int i=0;i<strlen(pString);i++){pString[i]=toupper(pString[i]);}
 }
 else{
 for(int i=0;i<strlen(pString);i++){pString[i]=tolower(pString[i]);}
-}
-}
-//mark package
+}}
+//mark upperlower
+
+
 void package(){
 FILE * filePackage;
 //filePackage is null ==>> permissions
@@ -43,18 +43,19 @@ char fileName[40];
 char inputCOPY[STRING_LIMIT];
 if(filePackage==NULL){printf("Can't open file\n"); exit(1);}
 
+strcpy(fileName,"/etc/portage/package.use/");
 
 while(true){
-strcpy(fileName,"/etc/portage/package.use/");
+fileName[25]='\0';
+printf("%s\n",fileName);
 printf("PACKAGE: ");
 fgets(input,STRING_LIMIT,stdin);
 input[strlen(input)-1]='\0';
-if(strcmp(input,"exit")==0){break;}
 upperLower(input,false);
+if(strcmp(input,"exit")==0){break;}
 strcpy(inputCOPY,input);
-printf("%s\n",inputCOPY);
 
-
+//TODO ADD A WAY TO REMOVE FILES (SAFE ONE)
 
 //filePackage = fopen("/etc/portage/package.use/packageTry","w");
 if(strstr(input," ")==NULL||strstr(input,"/")==NULL){printf("BAD USAGE: [category]/[name] [USEflag]\n");}
@@ -68,10 +69,11 @@ else{
 }
 }
 }
+//mark package
 
-//mark help
+
 void help(){
-printf("\nList of availible inputs:\nhelp - show this dialog\nUSE - USE Flag configuration mode\nVIDEO_CARDS - VIDEO_CARDS configuration mode\nMAKEOPTS - MAKEOPTS configuration mode\nACCEPT_LICENSE - ACCEPT_LICENSE configuration mode\nexit - exit program without saving changes\n\n");
+printf("\nList of availible inputs:\nHELP - show this dialog\nUSE - USE Flag configuration mode\nVIDEO_CARDS - VIDEO_CARDS configuration mode\nMAKEOPTS - MAKEOPTS configuration mode\nACCEPT_LICENSE - ACCEPT_LICENSE configuration mode\nPACKAGE - Configure Flags for specific packages\nEXIT - exits program without saving changes\n\n");
 }
 //mark action
 void action(char * name){
@@ -127,8 +129,9 @@ void action(char * name){
 	for(int i=0;i<sizeof(name_true);i++){name_true[i]='\0';}
 
 }
+//mark help
 
-//mark use
+
 void use(char pcontents[lines][max_length]){
 
 //char * search;
@@ -156,9 +159,11 @@ search[strlen(search)]='"';
 search[strlen(search)+1]='\0';
 input[1]='\0';
 }
+//mark use
+
+
  ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
-//mark cflags
 void cflags(char pcontents[lines][max_length]){
 for(int i=0;i<lines;i++){
 search = strstr(pcontents[i],"CFLAGS");
@@ -181,9 +186,9 @@ search[strlen(search)]='"';
 search[strlen(search)+1]='\0';
 input[1]='\0';
 }
+//mark cflags
 ////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
-//mark cxxflags
 void cxxflags(char pcontents[lines][max_length]){
 for(int i=0;i<lines;i++){
 search = strstr(pcontents[i],"CXXFLAGS");
@@ -207,9 +212,9 @@ search[strlen(search)+1]='\0';
 input[1]='\0';
 
 }
+//mark cxxflags
 ////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
-//mark makeopts
 void makeopts(char pcontents[lines][max_length]){
 
 //char * search;
@@ -237,8 +242,8 @@ search[strlen(search)]='"';
 search[strlen(search)+1]='\0';
 input[1]='\0';
 }
+//mark makeopts
 
-//mark video
 void video_cards(char pcontents[lines][max_length]){
 for(int i=0;i<lines;i++)
 {
@@ -275,6 +280,10 @@ search[strlen(search)]='"';
 search[strlen(search)+1]='\0';
 input[1]='\0';
 }
+//mark video
+
+
+
 //mark accept_license()
 void accept_license(char pcontents[lines][max_length]){
 for(int i=0;i<lines;i++){
@@ -310,7 +319,7 @@ do
 		printf("Recognized flags:\n @GPL-COMPATIBLE\n @FSF-APPROVED\n @MISC-FREE\n @EULA\n @OSI-APPROVED\n @OSI-APPROVED-FREE\n @OSI-APPROVED-NONFREE\n @BINARY-REDISTRUTABLE\n @FSF-APPROVED-OTHER\n @MISC-FREE-DOCS\n @FREE\n @FREE-SOFTWARE\n @FREE-DOCUMENTS\n");
 
 		}
-		else{//mark trouble
+		else{
 			printf("Flag not recognized\nUse it anyway?\n");
 			char option[6];
 			do{
