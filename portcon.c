@@ -310,15 +310,18 @@ do
 		printf("Recognized flags:\n @GPL-COMPATIBLE\n @FSF-APPROVED\n @MISC-FREE\n @EULA\n @OSI-APPROVED\n @OSI-APPROVED-FREE\n @OSI-APPROVED-NONFREE\n @BINARY-REDISTRUTABLE\n @FSF-APPROVED-OTHER\n @MISC-FREE-DOCS\n @FREE\n @FREE-SOFTWARE\n @FREE-DOCUMENTS\n");
 
 		}
-		else{
+		else{//mark trouble
 			printf("Flag not recognized\nUse it anyway?\n");
-			char option[20];
+			char option[6];
 			do{
 				printf("\n[y/n]: ");
-				scanf("%1s",option);
+				fgets(option,6,stdin);
+				//option[strlen(option)-1]='\0';
+				printf("option: %s\n",option);
+				
 			}
-			while(strlen(option)!=1);
-			(strcmp(option,"y")==0) ? action(input) : printf("trashing...\n");
+			while(option[0]!='y'&&option[0]!='n');
+			option[0]=='y' ? action(input) : printf("trashing...\n");
 			printf("\n%s\n\n",search);
 		}
 		//action(input); printf("should print\n");
